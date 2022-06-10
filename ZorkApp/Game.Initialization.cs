@@ -87,13 +87,13 @@ namespace ZorkApp
         private void InitializeLocations()
         {
             var leaflet = new ZorkThing();
-            leaflet.Name = "Leaflet";
+            leaflet.Name = "leaflet";
             leaflet.Description = "leaflet";
             leaflet.IsReadable = true;
             leaflet.Text = "\"WELCOME TO ZORK!\nZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals.  No computer should be without one!\"";
 
             var mailbox = new ZorkContainer();
-            mailbox.Name = "Mailbox";
+            mailbox.Name = "mailbox";
             mailbox.Description = "small mailbox";
             mailbox.Things.Add(leaflet);
 

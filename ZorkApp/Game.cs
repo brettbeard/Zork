@@ -128,28 +128,25 @@ namespace ZorkApp
                 {
                     if (item.GetType() == typeof(ZorkContainer))
                     {
+                        ZorkContainer thing = (ZorkContainer)item;
+
                         String text = String.Format("There is a {0} here.", item.Description);
                         this.OutputText(text);
+
+                        if (thing.IsOpen)
+                        {
+                            text = String.Format("The {0} contains:", item.Description);
+                            this.OutputText(text);
+
+                            foreach (var subThing in thing.Things)
+                            {
+                                text = String.Format("A {0}", subThing.Description);
+                                this.OutputText(text);                                
+                            }
+                        }
                     }
                 }
-            }
-
-            //if (context.CurrentRoom.Objects.Count > 0)
-            //{
-            //    foreach (var item in context.CurrentRoom.Objects)
-            //    {
-            //        var container = item as ZorkContainer;
-            //        if (container != null)
-            //        {
-            //            container.Describe();
-            //        }
-            //        else
-            //        {
-            //            String text = String.Format("There is a {0} here.", item.Description);
-            //            this.OutputText(text);
-            //        }
-            //    }
-            //}
+            }            
         }
 
         /// <summary>
@@ -182,14 +179,27 @@ namespace ZorkApp
                     if (item.Category == WordCategory.Verb)
                     {
                         // Found the verb - now exit the loop
-                        verb = item.Text;
-                        break;
+                        verb = item.Text;                        
+                    }
+                }
+                else
+                {
+                    if (String.IsNullOrEmpty(verb) == false)
+                    {
+                        if (String.IsNullOrEmpty(directObject))
+                        {
+                            directObject = word;
+                        }
+                        else
+                        {
+                            indirectObject = word;
+                        }
                     }
                 }
             }
 
             // No verb?
-            if (verb == String.Empty)
+            if (String.IsNullOrEmpty(verb))
             {
                 // Is this word in our vocabulary?
                 var item = context.Vocabulary.LookUp(words[0]);
@@ -223,16 +233,26 @@ namespace ZorkApp
             return results;
         }
 
+        /// <summary>
+        /// Displays the title.
+        /// </summary>
         private void DisplayTitle()
         {
             this.OutputText("ZORK I: The Great Underground Empire");
         }
 
+        /// <summary>
+        /// Outputs the text.
+        /// </summary>
+        /// <param name="text">The text.</param>
         private void OutputText(String text)
         {
             Console.WriteLine(text);
         }
 
+        /// <summary>
+        /// Outputs the cursor.
+        /// </summary>
         private void OutputCursor()
         {
             Console.Write("\n > ");

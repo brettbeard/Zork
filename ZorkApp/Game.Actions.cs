@@ -43,18 +43,15 @@ namespace ZorkApp
                 case Actions.Inventory:
                     this.OutputText("Inventory.");
                     break;
-
                 case Actions.Walk:
                     this.HandleWalk(parameters.DirectOjbect, context);
                     break;
                 case Actions.Open:
                     this.HandleOpen(parameters.DirectOjbect, context);
                     break;
-
                 case Actions.Close:
                     this.HandleClose(parameters.DirectOjbect, context);
                     break;
-
                 case Actions.Read:
                     this.HandleRead(parameters.DirectOjbect, context);
                     break;
@@ -136,17 +133,20 @@ namespace ZorkApp
             {
                 if (thing.GetType() == typeof(ZorkContainer))
                 {
-                    ZorkContainer container = (ZorkContainer)thing;
-                    if (container.IsOpen == false)
+                    if (thing.Name.Equals(directObject))
                     {
-                        container.IsOpen = false;
+                        ZorkContainer container = (ZorkContainer)thing;
+                        if (container.IsOpen == false)
+                        {
+                            container.IsOpen = true;
 
-                        String text = String.Format("Opening the {0} reveals {1}.", container.Description, container.Things[0].Description);
-                        this.OutputText(text);
-                    }
-                    else
-                    {
-                        this.OutputText("It is already open.");
+                            String text = String.Format("Opening the {0} reveals {1}.", container.Description, container.Things[0].Description);
+                            this.OutputText(text);
+                        }
+                        else
+                        {
+                            this.OutputText("It is already open.");
+                        }
                     }
 
                 }
@@ -210,14 +210,38 @@ namespace ZorkApp
 
         private void HandleRead(String directObject, GameContext context)
         {
+            Boolean handled = false;
             foreach (var thing in context.CurrentLocation.Things)
             {
-                if (thing.IsReadable)
+                if (thing.GetType() == typeof(ZorkContainer))
                 {
-                    //String text = String.Format("Opening the {0} reveals {1}.", container.Description, container.Things[0].Description);
-                    this.OutputText(thing.Text);
-                }                
-            }         
+                    ZorkContainer container = (ZorkContainer)thing;
+                    if (container.IsOpen == true)
+                    {
+                        foreach (var subThing in container.Things)
+                        {
+                            if (subThing.IsReadable)
+                            {                                
+                                this.OutputText(subThing.Text);
+                                handled = true;
+                            }
+                        }
+                            
+                    }
+                }
+
+                //if (thing.IsReadable)
+                //{
+                //    //String text = String.Format("Opening the {0} reveals {1}.", container.Description, container.Things[0].Description);
+                //    this.OutputText(thing.Text);
+                //}                
+            }
+
+            if (handled == false)
+            {
+                String text = String.Format("You can't see any {0} here!", directObject);
+                this.OutputText(text);
+            }
         }
     }
 }
