@@ -72,6 +72,9 @@ namespace ZorkApp
 
             this.words.Add("se", new Word("se", "se", WordCategory.Noun, true));
             this.words.Add("sw", new Word("sw", "sw", WordCategory.Noun, true));
+
+            this.words.Add("up", new Word("up", "up", WordCategory.Noun, true));
+            this.words.Add("down", new Word("down", "down", WordCategory.Noun, true));
         }
     }
 

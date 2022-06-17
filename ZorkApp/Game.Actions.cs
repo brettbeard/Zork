@@ -115,10 +115,23 @@ namespace ZorkApp
                         where item.Direction == Direction.East
                         select item).FirstOrDefault();
             }
+            else if (directObject == "up")
+            {
+                exit = (from item in context.CurrentLocation.Exits
+                        where item.Direction == Direction.Up
+                        select item).FirstOrDefault();
+            }
 
             if (exit != null)
             {
-                context.CurrentLocation = this.locations[exit.Location];
+                if (String.IsNullOrEmpty(exit.Text))
+                {
+                    context.CurrentLocation = this.locations[exit.Location];
+                }
+                else
+                {
+                    this.OutputText(exit.Text);
+                }
             }
         }
 
@@ -163,24 +176,7 @@ namespace ZorkApp
                         this.OutputText("Nothing to open.");
                     }
                 }
-            }
-
-            //ZorkDoor door = (ZorkDoor)(from item in context.CurrentLocation.Things
-            //                           where item.GetType() == typeof(ZorkDoor)
-            //                           select item).FirstOrDefault();
-
-            //if (door != null)
-            //{
-            //    if (door.IsOpen == false)
-            //    {
-            //        this.OutputText(door.OpenText);
-            //        door.IsOpen = true;
-            //    }
-            //}
-            //else
-            //{
-            //    this.OutputText("Nothing to open.");
-            //}
+            }           
         }
 
         /// <summary>
