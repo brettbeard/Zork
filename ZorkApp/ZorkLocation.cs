@@ -23,6 +23,7 @@
 
 namespace ZorkApp
 {
+    using System;
     using System.Collections.ObjectModel;
 
     /// <summary>
@@ -67,7 +68,9 @@ namespace ZorkApp
         NorthWest,
         NorthEast,
         SouthWest,
-        SouthEast
+        SouthEast,
+        Up,
+        Down
     }
 
     public class Exit
@@ -75,6 +78,8 @@ namespace ZorkApp
         public Direction Direction { get; set; }
 
         public LocationIds Location { get; set; }
+
+        public String Text { get; set; }
 
         public Exit(Direction direction, LocationIds location)
         {

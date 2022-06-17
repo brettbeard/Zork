@@ -44,7 +44,9 @@ namespace ZorkApp
         Forest1,
         Forest2,
         Forest3,
-        Path
+        Path,
+        Clearing,
+        Mountains
     }
 
     /// <summary>

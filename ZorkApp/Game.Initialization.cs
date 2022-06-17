@@ -128,12 +128,64 @@ namespace ZorkApp
             location.Exits.Add(new Exit(Direction.West, LocationIds.Forest3));
             this.locations.Add(LocationIds.SouthOfHouse, location);
 
+            // FOREST-1
             location = new ZorkLocation();
             location.Description = "This is a forest, with trees in all directions. To the east, there appears to be sunlight.";
             location.Name = "Forest";
-            //location.Exits.Add(new Exit(Direction.West, LocationIds.WestOfHouse));
+
+            location.Exits.Add(new Exit(Direction.North, LocationIds.Clearing));
+            location.Exits.Add(new Exit(Direction.South, LocationIds.Forest3));
+            location.Exits.Add(new Exit(Direction.East, LocationIds.Path));
+            
+            var exit = new Exit(Direction.West, LocationIds.Forest1);
+            exit.Text = "You would need a machete to go further west.";
+            location.Exits.Add(exit);
+
+            exit = new Exit(Direction.Up, LocationIds.Forest1);
+            exit.Text = "There is no tree here suitable for climbing.";
+            location.Exits.Add(exit);          
+
             this.locations.Add(LocationIds.Forest1, location);
 
+            // FOREST-2
+            location = new ZorkLocation();
+            location.Description = "This is a dimly lit forest, with large trees all around.";
+            location.Name = "Forest";
+
+            exit = new Exit(Direction.Up, LocationIds.Forest2);
+            exit.Text = "There is no tree here suitable for climbing.";
+            location.Exits.Add(exit);
+
+            exit = new Exit(Direction.North, LocationIds.Forest2);
+            exit.Text = "The forest becomes impenetrable to the north..";
+            location.Exits.Add(exit);
+            
+            location.Exits.Add(new Exit(Direction.East, LocationIds.Mountains));
+            location.Exits.Add(new Exit(Direction.South, LocationIds.Clearing));
+            location.Exits.Add(new Exit(Direction.West, LocationIds.Path));
+
+            location.Exits.Add(new Exit(Direction.South, LocationIds.NorthOfHouse));
+            this.locations.Add(LocationIds.Forest2, location);
+
+            // MOUNTAINS
+            location = new ZorkLocation();
+            location.Description = "The forest thins out, revealing impassable mountains.";
+            location.Name = "Forest";
+
+            exit = new Exit(Direction.Up, LocationIds.Mountains);
+            exit.Text = "The mountains are impassable";
+            location.Exits.Add(exit);
+
+            exit = new Exit(Direction.East, LocationIds.Mountains);
+            exit.Text = "The forest becomes impenetrable to the north..";
+            location.Exits.Add(exit);
+            
+            location.Exits.Add(new Exit(Direction.North, LocationIds.Forest2));
+            location.Exits.Add(new Exit(Direction.South, LocationIds.Forest2));
+            location.Exits.Add(new Exit(Direction.West, LocationIds.Forest2));            
+            this.locations.Add(LocationIds.Mountains, location);
+
+            // EAST-OF-HOUSE
             var kitchenWindow = new ZorkDoor();
             kitchenWindow.Name = "KitchenWindow";
             kitchenWindow.OpenText = "With great effort, you open the window far enough to allow entry.";
@@ -143,23 +195,27 @@ namespace ZorkApp
             eastOfHouse.Things.Add(kitchenWindow);
             this.locations.Add(LocationIds.EastOfHouse, eastOfHouse);
 
+            // PATH
             location = new ZorkLocation();
-            location.Description = "This is a path winding through a dimly lit forest. The path heads north - south here.One particularly large tree with some low branches stands at the edge of the path.";
+            location.Description = "This is a path winding through a dimly lit forest. The path heads north - south here.  One particularly large tree with some low branches stands at the edge of the path.";
             location.Name = "Forest path";
             location.Exits.Add(new Exit(Direction.South, LocationIds.NorthOfHouse));
+            location.Exits.Add(new Exit(Direction.East, LocationIds.Forest2));
             this.locations.Add(LocationIds.Path, location);
 
-            location = new ZorkLocation();
-            location.Description = "This is a dimly lit forest, with large trees all around.";
-            location.Name = "Forest";
-            location.Exits.Add(new Exit(Direction.South, LocationIds.NorthOfHouse));
-            this.locations.Add(LocationIds.Forest2, location);
-
+            // FOREST-3
             location = new ZorkLocation();
             location.Description = "This is a dimly lit forest, with large trees all around.";
             location.Name = "Forest";
             location.Exits.Add(new Exit(Direction.South, LocationIds.NorthOfHouse));
             this.locations.Add(LocationIds.Forest3, location);
+
+            // GRATING - CLEARING
+            location = new ZorkLocation();
+            location.Description = "You are in a clearing, with a forest surrounding you on all sides. A path leads south.";
+            location.Name = "Clearing";
+            location.Exits.Add(new Exit(Direction.West, LocationIds.Forest1));
+            this.locations.Add(LocationIds.Clearing, location);
         }
     }
 }
